@@ -19,10 +19,10 @@ func main() {
 
 	go ThingsQ(connection)
 	go BallQ(connection)
+	go GetRejectedEntry(connection)
 	fmt.Println("Before select")
 	select {}
 }
-
 // ThingsQ get payload
 func ThingsQ(connection rmq.Connection) {
 	queue := connection.OpenQueue("things")
@@ -34,6 +34,11 @@ func ThingsQ(connection rmq.Connection) {
 		// con := NewConsumer(i)
 		fmt.Println(consumerName)
 	}
+}
+func GetRejectedEntry(connection rmq.Connection) {
+	queue := connection.OpenQueue("things")
+	returned := queue.ReturnAllRejected()
+	log.Printf("queue returner returned %d rejected deliveries", returned)
 }
 func BallQ(connection rmq.Connection) {
 	queue := connection.OpenQueue("balls")

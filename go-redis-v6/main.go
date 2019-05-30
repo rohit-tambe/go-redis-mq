@@ -39,7 +39,7 @@ func main() {
 	// })
 	fmt.Println(redisdb)
 	go Q1(redisdb)
-	// go Q2(redisdb)
+	go Q2(redisdb)
 	fmt.Println("before block")
 	select {}
 }

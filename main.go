@@ -9,7 +9,6 @@ import (
 )
 
 const (
-	// numDeliveries = 100000000
 	numDeliveries = 10
 	batchSize     = 10000
 )

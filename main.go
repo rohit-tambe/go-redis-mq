@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/adjust/rmq"
+	"github.com/go-redis/redis"
 )
 
 const (
@@ -28,4 +29,14 @@ func main() {
 		balls.Publish(ballDelivery)
 		log.Printf("Publish sucessfully ........")
 	}
+	// producer of go-redis/redis
+	redisdb := redis.NewClient(&redis.Options{
+		Addr: "localhost:6379",
+	})
+	var name []string
+	for index := 1; index < 100000; index++ {
+		trn := fmt.Sprintf("Payout=%d", index)
+		name = append(name, trn)
+	}
+	redisdb.RPush("payout", name)
 }
